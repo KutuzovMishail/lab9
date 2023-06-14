@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hardware list</title>
+    
+</head>
+<body>
+    <style>
+        body{
+         background-color: #f0bc79;
+        } 
+       </style>
+<h2>Hardware</h2>
+<b>Введите наименование и цену</b>
+<form method="post" action="/add_detail">
+    <input type="text" name="name">
+    <input type="float" name="price">
+    <button type="submit">Добавить запчасть</button>
+</form>
+
+<h3>Список запчастей</h3>
+{% set total = [0] %}
+{% for device in devices %}
+<div>{{ device.name }}
+    {% for price in device.price %}
+    {% set _ = total.append(total.pop() + price.price|float)%}
+        <b>{{ price.price }}₽</b>
+    {% endfor %}
+</div>
+{% endfor %}
+<tr>
+    <td>Общая стоимость</td>
+    <td>{{ total[0] }}₽</td>
+</tr>
+
+<form method="post" action="/remove_details">
+    <button type="submit">Очистить список</button>
+</form>
+
+</body>
+</html>
